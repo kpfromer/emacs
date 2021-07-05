@@ -2,7 +2,6 @@
 #+AUTHOR: Kyle Pfromer
 #+property: header-args:emacs-lisp :tangle config.el
 
-
 * User Settings
 Some functionality uses this to identify you, e.g. GPG configuration, email clients, file templates and snippets.
 
@@ -28,16 +27,21 @@ Doom exposes five (optional) variables for controlling fonts in Doom. Here are t
 + `doom-big-font' -- used for `doom-big-font-mode'; use this for presentations or streaming.
 
 #+begin_src emacs-lisp
-;; There are two ways to load a theme. Both assume the theme is installed and
-;; available. You can either set `doom-theme' or manually load a theme with the
-;; `load-theme' function. This is the default:
-(setq doom-theme 'doom-one-light)
+(setq doom-font (font-spec :family "JetBrains Mono" :size 24)
+      doom-big-font (font-spec :family "JetBrains Mono" :size 36))
 #+end_src
 
 * Org Mode
-**todo**
+** Bullets
+This adds org mode bullets. This is a much prettier utf-8 version of the asterisks in org mode.
 
+#+begin_src emacs-lisp
+(add-hook 'org-mode-hook (lambda () (org-bullets-mode 1)))
+#+end_src
+** Auto Tangle
 Adds auto tangle. It automatically runs `org-babel-tangle` upon saving any org-mode buffer, which means the resulting files will be automatically kept up to date.
+
+Read more about tangling [[https://orgmode.org/manual/Extracting-Source-Code.html][here]].
 
 #+begin_src emacs-lisp
 (use-package! org-auto-tangle
