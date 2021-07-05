@@ -50,3 +50,11 @@ Read more about tangling [[https://orgmode.org/manual/Extracting-Source-Code.htm
   :config
   (setq org-auto-tangle-default t))
 #+end_src
+
+* Packages
+** Projectile
+This adds the defautls for projectile.
+
+#+begin_src emacs-lisp
+(setq projectile-project-search-path '("~/programming/"))
+#+end_src
