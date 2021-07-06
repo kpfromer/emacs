@@ -192,7 +192,7 @@ Here is the code that is written to `init.el`. This defines what modules I want 
        (evil +everywhere); come to the dark side, we have cookies
        file-templates    ; auto-snippets for empty files
        fold              ; (nigh) universal code folding
-       ;;(format +onsave)  ; automated prettiness
+       (format +onsave)  ; automated prettiness
        ;;god               ; run Emacs commands without modifier keys
        ;;lispy             ; vim for lisp, for people who don't like vim
        ;;multiple-cursors  ; editing in many places at once
@@ -419,3 +419,13 @@ This adds the defautls for projectile.
 #+begin_src emacs-lisp
 (setq projectile-project-search-path '("~/programming/"))
 #+end_src
+
+* Resources
+** Examples Configs
+Here is a collection of example configurations I used to create my own config.
+
+Doom Emacs:
+- [[https://github.com/zzamboni/dot-doom]]
+- [[https://tecosaur.github.io/emacs-config/config.html]]
+Regular Emacs:
+- [[https://github.com/angrybacon/dotemacs/blob/master/dotemacs.org]]
