@@ -347,8 +347,8 @@ Doom exposes five (optional) variables for controlling fonts in Doom. Here are t
 + `doom-big-font' -- used for `doom-big-font-mode'; use this for presentations or streaming.
 
 #+begin_src emacs-lisp
-(setq doom-font (font-spec :family "JetBrains Mono" :size 24)
-      doom-big-font (font-spec :family "JetBrains Mono" :size 36))
+(setq doom-font (font-spec :family "JetBrains Mono" :size 12)
+      doom-big-font (font-spec :family "JetBrains Mono" :size 24))
 #+end_src
 * Org Mode
 ** Better Font Faces
@@ -358,23 +358,26 @@ Doom exposes five (optional) variables for controlling fonts in Doom. Here are t
 
 #+begin_src emacs-lisp
 ;; Set faces for heading levels
-(dolist (face '((org-level-1 . 1.2)
-                (org-level-2 . 1.1)
-                (org-level-3 . 1.05)
-                (org-level-4 . 1.0)
-                (org-level-5 . 1.1)
-                (org-level-6 . 1.1)
-                (org-level-7 . 1.1)
-                (org-level-8 . 1.1)))
-(set-face-attribute (car face) nil :font "Inter" :weight 'regular :height (cdr face)))
-;; Ensure that anything that should be fixed-pitch in Org files appears that way
-(set-face-attribute 'org-block nil :foreground nil :inherit 'fixed-pitch)
-(set-face-attribute 'org-code nil   :inherit '(shadow fixed-pitch))
-(set-face-attribute 'org-table nil   :inherit '(shadow fixed-pitch))
-(set-face-attribute 'org-verbatim nil :inherit '(shadow fixed-pitch))
-(set-face-attribute 'org-special-keyword nil :inherit '(font-lock-comment-face fixed-pitch))
-(set-face-attribute 'org-meta-line nil :inherit '(font-lock-comment-face fixed-pitch))
-(set-face-attribute 'org-checkbox nil :inherit 'fixed-pitch)
+(defun my/org-mode-hook ()
+    (dolist (face '((org-level-1 . 1.2)
+                    (org-level-2 . 1.1)
+                    (org-level-3 . 1.05)
+                    (org-level-4 . 1.0)
+                    (org-level-5 . 1.1)
+                    (org-level-6 . 1.1)
+                    (org-level-7 . 1.1)
+                    (org-level-8 . 1.1)))
+    (set-face-attribute (car face) nil :font "Inter" :weight 'regular :height (cdr face)))
+    ;; Ensure that anything that should be fixed-pitch in Org files appears that way
+    (set-face-attribute 'org-block nil :foreground nil :inherit 'fixed-pitch)
+    (set-face-attribute 'org-code nil   :inherit '(shadow fixed-pitch))
+    (set-face-attribute 'org-table nil   :inherit '(shadow fixed-pitch))
+    (set-face-attribute 'org-verbatim nil :inherit '(shadow fixed-pitch))
+    (set-face-attribute 'org-special-keyword nil :inherit '(font-lock-comment-face fixed-pitch))
+    (set-face-attribute 'org-meta-line nil :inherit '(font-lock-comment-face fixed-pitch))
+    (set-face-attribute 'org-checkbox nil :inherit 'fixed-pitch))
+
+(add-hook 'org-load-hook #'my/org-mode-hook)
 #+end_src
 ** Bullets
 This adds org mode bullets. This is a much prettier utf-8 version of the asterisks in org mode.
@@ -395,12 +398,8 @@ Read more about tangling [[https://orgmode.org/manual/Extracting-Source-Code.htm
 (package! org-auto-tangle)
 #+end_src
 
-,#+begin_src emacs-lisp
-(use-package! org-auto-tangle
-  :defer t
-  :hook (org-mode . org-auto-tangle-mode)
-  :config
-  (setq org-auto-tangle-default t))
+#+begin_src emacs-lisp
+(add-hook! org-mode :append #'org-auto-tangle-mode)
 #+end_src
 ** Reveal Emphasis Markers
 Show emphasis markers when the cursor is over it.
