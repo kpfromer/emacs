@@ -331,6 +331,21 @@ Here is the code that is written to `init.el`. This defines what modules I want 
 (setq user-full-name "Kyle Pfromer"
       user-mail-address "kpfromer2@gmail.com")
 #+end_src
+* Code
+** Indentation
+Use 2 spaces as indentation.
+#+begin_src emacs-lisp
+(setq-default tab-width 2)
+
+#+end_src
+
+Use spaces instead of tabs.
+#+begin_src emacs-lisp
+(setq-default indent-tabs-mode nil)
+#+end_src
+** Evil Tweaks
+TODO:
+[[to][https://github.com/Townk/doom-emacs-private/blob/master/config.org#modal-editing-1]]
 * Visual
 ** Theme
 There are two ways to load a theme. Both assume the theme is installed and available. You can either set `doom-theme' or manually load a theme with the `load-theme' function. This is the default:
@@ -383,11 +398,11 @@ Doom exposes five (optional) variables for controlling fonts in Doom. Here are t
 This adds org mode bullets. This is a much prettier utf-8 version of the asterisks in org mode.
 
 #+begin_src emacs-lisp :tangle packages.el
-(package! org-bullets)
+;; (package! org-bullets)
 #+end_src
 
 #+begin_src emacs-lisp
-(add-hook 'org-mode-hook (lambda () (org-bullets-mode 1)))
+;; (add-hook 'org-mode-hook (lambda () (org-bullets-mode 1)))
 #+end_src
 ** Auto Tangle
 Adds auto tangle. It automatically runs `org-babel-tangle` upon saving any org-mode buffer, which means the resulting files will be automatically kept up to date.
