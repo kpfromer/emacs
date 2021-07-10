@@ -399,16 +399,6 @@ Doom exposes five (optional) variables for controlling fonts in Doom. Here are t
 
 (add-hook 'org-load-hook #'my/org-mode-hook)
 #+end_src
-** Bullets
-This adds org mode bullets. This is a much prettier utf-8 version of the asterisks in org mode.
-
-#+begin_src emacs-lisp :tangle packages.el
-;; (package! org-bullets)
-#+end_src
-
-#+begin_src emacs-lisp
-;; (add-hook 'org-mode-hook (lambda () (org-bullets-mode 1)))
-#+end_src
 ** Auto Tangle
 Adds auto tangle. It automatically runs `org-babel-tangle` upon saving any org-mode buffer, which means the resulting files will be automatically kept up to date.
 
