@@ -371,6 +371,20 @@ Doom exposes five (optional) variables for controlling fonts in Doom. Here are t
       doom-big-font (font-spec :family "JetBrains Mono" :size 24))
 #+end_src
 * Org Mode
+** Org Directory
+This is where all of my org file will be typiically located.
+
+#+begin_src emacs-lisp
+(setq org-directory "~/programming/org")
+#+end_src
+** Default Folding
+By default when I open an org mode file all the sections will be folded. This makes it easier to find important information.
+
+See options [[https://orgmode.org/manual/Initial-visibility.html#Initial-visibility][here.]]
+
+#+begin_src emacs-lisp
+(setq org-startup-folded "overview")
+#+end_src
 ** Better Font Faces
 - Here we set the various font sizes for org mode headers.
 - We also set variable fonts (non-monospace) for org mode.
