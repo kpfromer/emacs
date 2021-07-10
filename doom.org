@@ -284,7 +284,12 @@ Here is the code that is written to `init.el`. This defines what modules I want 
        ;;nim               ; python + lisp at the speed of c
        ;;nix               ; I hereby declare "nix geht mehr!"
        ;;ocaml             ; an objective camel
-       org               ; organize your plain life in plain text
+       (org               ; organize your plain life in plain text
+        +pretty ; pretties the org (nice unicode symbols)
+        +dragndrop ; drag & drop files/images into org buffers
+        +pandoc ; export/import using pando
+        +pomodoro ; be fruitful with the tomato technique
+        +roam) ; roaming around my notes
        ;;php               ; perl's insecure younger brother
        ;;plantuml          ; diagrams for confusing people more
        ;;purescript        ; javascript, but functional
