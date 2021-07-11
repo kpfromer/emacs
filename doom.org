@@ -423,17 +423,26 @@ Read more about tangling [[https://orgmode.org/manual/Extracting-Source-Code.htm
 #+end_src
 
 #+begin_src emacs-lisp
+(require 'org-auto-tangle)
 (add-hook! org-mode :append #'org-auto-tangle-mode)
+;; (add-hook 'org-mode-hook 'org-auto-tangle-mode)
 #+end_src
 ** Reveal Emphasis Markers
 Show emphasis markers when the cursor is over it.
 
 #+begin_src emacs-lisp :tangle packages.el
-(package! org-appear)
+(package! org-appear
+  :recipe (:host github
+           :repo "awth13/org-appear"))
 #+end_src
 
 #+begin_src emacs-lisp
-(add-hook! org-mode :append #'org-appear-mode)
+(use-package! org-appear
+    :hook (org-mode . org-appear-mode)
+    :config
+    (setq org-appear-autoemphasis t
+          org-appear-autosubmarkers t
+          org-appear-autolinks t)
 #+end_src
 * Packages
 ** Projectile
