@@ -442,7 +442,7 @@ Show emphasis markers when the cursor is over it.
     :config
     (setq org-appear-autoemphasis t
           org-appear-autosubmarkers t
-          org-appear-autolinks t)
+          org-appear-autolinks t))
 #+end_src
 * Packages
 ** Projectile
