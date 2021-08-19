@@ -230,7 +230,7 @@ Here is the code that is written to `init.el`. This defines what modules I want 
        (eval +overlay)     ; run code, run (also, repls)
        ;;gist              ; interacting with github gists
        lookup              ; navigate your code and its documentation
-       ;;lsp
+       lsp
        magit             ; a git porcelain for Emacs
        ;;make              ; run make tasks from Emacs
        ;;pass              ; password manager for nerds
@@ -273,7 +273,7 @@ Here is the code that is written to `init.el`. This defines what modules I want 
        ;;idris             ; a language you can depend on
        json              ; At least it ain't XML
        ;;(java +meghanada) ; the poster child for carpal tunnel syndrome
-       javascript        ; all(hope(abandon(ye(who(enter(here))))))
+       (javascript +lsp)       ; all(hope(abandon(ye(who(enter(here))))))
        ;;julia             ; a better, faster MATLAB
        ;;kotlin            ; a better, slicker Java(Script)
        latex             ; writing papers in Emacs has never been so fun
@@ -300,7 +300,7 @@ Here is the code that is written to `init.el`. This defines what modules I want 
        ;;rest              ; Emacs as a REST client
        ;;rst               ; ReST in peace
        ;;(ruby +rails)     ; 1.step {|i| p "Ruby is #{i.even? ? 'love' : 'life'}"}
-       rust              ; Fe2O3.unwrap().unwrap().unwrap().unwrap()
+       (rust +lsp)             ; Fe2O3.unwrap().unwrap().unwrap().unwrap()
        ;;scala             ; java, but good
        ;;(scheme +guile)   ; a fully conniving family of lisps
        sh                ; she sells {ba,z,fi}sh shells on the C xor
@@ -442,11 +442,29 @@ Show emphasis markers when the cursor is over it.
     :config
     (setq org-appear-autoemphasis t
           org-appear-autosubmarkers t
-<<<<<<< HEAD
           org-appear-autolinks nil))
-=======
-          org-appear-autolinks t))
->>>>>>> ea93afeec62df0363baa1edf0bdacdad8d49e7d8
+#+end_src
+** Roam server
+A web application to show roam notes as a visual graph.
+
+#+begin_src emacs-lisp :tangle packages.el
+(package! org-roam-server)
+#+end_src
+
+#+begin_src emacs-lisp
+(use-package! org-roam-server
+  :config
+  (setq org-roam-server-host "127.0.0.1"
+        org-roam-server-port 8080
+        org-roam-server-authenticate nil
+        org-roam-server-export-inline-images t
+        org-roam-server-serve-files nil
+        org-roam-server-served-file-extensions '("pdf" "mp4" "ogv")
+        org-roam-server-network-poll t
+        org-roam-server-network-arrows nil
+        org-roam-server-network-label-truncate t
+        org-roam-server-network-label-truncate-length 60
+        org-roam-server-network-label-wrap-length 20))
 #+end_src
 * Packages
 ** Projectile
