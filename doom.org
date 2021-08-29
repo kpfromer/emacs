@@ -180,13 +180,13 @@ Here is the code that is written to `init.el`. This defines what modules I want 
        ophints           ; highlight the region an operation acts on
        (popup +defaults)   ; tame sudden yet inevitable temporary windows
        ;;tabs              ; a tab bar for Emacs
-       treemacs          ; a project drawer, like neotree but cooler
+       (treemacs +magit +lsp)         ; a project drawer, like neotree but cooler
        ;;unicode           ; extended unicode support for various languages
        vc-gutter         ; vcs diff in the fringe
        vi-tilde-fringe   ; fringe tildes to mark beyond EOB
        ;;window-select     ; visually switch windows
        workspaces        ; tab emulation, persistence & separate workspaces
-       ;;zen               ; distraction-free coding or writing
+       zen               ; distraction-free coding or writing
 
        :editor
        (evil +everywhere); come to the dark side, we have cookies
@@ -289,7 +289,7 @@ Here is the code that is written to `init.el`. This defines what modules I want 
         +dragndrop ; drag & drop files/images into org buffers
         +pandoc ; export/import using pando
         +pomodoro ; be fruitful with the tomato technique
-        +roam) ; roaming around my notes
+        +roam2) ; roaming around my notes
        ;;php               ; perl's insecure younger brother
        ;;plantuml          ; diagrams for confusing people more
        ;;purescript        ; javascript, but functional
@@ -326,7 +326,7 @@ Here is the code that is written to `init.el`. This defines what modules I want 
        ;;twitter           ; twitter client https://twitter.com/vnought
 
        :config
-       ;;literate
+       literate
        (default +bindings +smartparens))
 #+end_src
 ** User Settings
@@ -448,27 +448,29 @@ Show emphasis markers when the cursor is over it.
 A web application to show roam notes as a visual graph.
 
 #+begin_src emacs-lisp :tangle packages.el
-(package! org-roam-server)
+(package! websocket)
+(package! org-roam-ui :recipe (:host github :repo "org-roam/org-roam-ui" :files ("*.el" "out")))
 #+end_src
 
 #+begin_src emacs-lisp
-(use-package! org-roam-server
-  :config
-  (setq org-roam-server-host "127.0.0.1"
-        org-roam-server-port 8080
-        org-roam-server-authenticate nil
-        org-roam-server-export-inline-images t
-        org-roam-server-serve-files nil
-        org-roam-server-served-file-extensions '("pdf" "mp4" "ogv")
-        org-roam-server-network-poll t
-        org-roam-server-network-arrows nil
-        org-roam-server-network-label-truncate t
-        org-roam-server-network-label-truncate-length 60
-        org-roam-server-network-label-wrap-length 20))
+(use-package! websocket
+    :after org-roam)
+
+(use-package! org-roam-ui
+    :after org-roam ;; or :after org
+;;         normally we'd recommend hooking orui after org-roam, but since org-roam does not have
+;;         a hookable mode anymore, you're advised to pick something yourself
+;;         if you don't care about startup time, use
+;;  :hook (after-init . org-roam-ui-mode)
+    :config
+    (setq org-roam-ui-sync-theme t
+          org-roam-ui-follow t
+          org-roam-ui-update-on-save t
+          org-roam-ui-open-on-start t))
 #+end_src
 * Packages
 ** Projectile
-This adds the defautls for projectile.
+This adds the defaults for projectile.
 
 #+begin_src emacs-lisp
 (setq projectile-project-search-path '("~/programming/"))
