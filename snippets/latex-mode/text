@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+# key: t
+# name: text
+# --
+\text{`%`$1}$0
