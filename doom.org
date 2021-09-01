@@ -468,6 +468,12 @@ A web application to show roam notes as a visual graph.
           org-roam-ui-update-on-save t
           org-roam-ui-open-on-start t))
 #+end_src
+** Scratch Pad
+This will make the Scratch pad default to org mode.
+
+#+begin_src emacs-lisp
+(setq initial-major-mode 'org-mode)
+#+end_src
 * Packages
 ** Projectile
 This adds the defaults for projectile.
