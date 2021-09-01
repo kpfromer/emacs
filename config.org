@@ -490,6 +490,21 @@ This adds the defaults for projectile.
 # (set-formatter! 'yapf "prettier --write" :modes '(typescript-mode))
 # #+end_src
 
+** Circadian (Light/Dark Mode)
+This is an auto light/dark mode switcher based on time of day.
+
+#+begin_src emacs-lisp :tangle packages.el
+(package! circadian)
+#+end_src
+
+#+begin_src emacs-lisp
+(use-package circadian
+  :ensure t
+  :config
+  (setq circadian-themes '(("7:00" . doom-one-light)
+                           ("19:30" . doom-one)))
+  (circadian-setup))
+#+end_src
 * Resources
 ** Examples Configs
 Here is a collection of example configurations I used to create my own config.
