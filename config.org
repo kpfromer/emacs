@@ -481,6 +481,11 @@ This adds the defaults for projectile.
 #+begin_src emacs-lisp
 (setq projectile-project-search-path '("~/programming/"))
 #+end_src
+# ** Formatting
+# #+begin_src emacs-lisp
+# (set-formatter! 'yapf "prettier --write" :modes '(javascript-mode))
+# (set-formatter! 'yapf "prettier --write" :modes '(typescript-mode))
+# #+end_src
 
 * Resources
 ** Examples Configs
