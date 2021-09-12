@@ -311,7 +311,7 @@ Here is the code that is written to `init.el`. This defines what modules I want 
        ;;solidity          ; do you need a blockchain? No.
        ;;swift             ; who asked for emoji variables?
        ;;terra             ; Earth and Moon in alignment for performance.
-       ;;web               ; the tubes
+       web               ; the tubes
        yaml              ; JSON, but readable
        ;;zig               ; C, but simpler
 
@@ -504,6 +504,16 @@ This is an auto light/dark mode switcher based on time of day.
   (setq circadian-themes '(("7:00" . doom-one-light)
                            ("19:30" . doom-one)))
   (circadian-setup))
+#+end_src
+** Tailwindcss
+https://github.com/merrickluo/lsp-tailwindcss
+
+#+begin_src emacs-lisp :tangle packages.el
+(package! lsp-tailwindcss :recipe (:host github :repo "merrickluo/lsp-tailwindcss"))
+#+end_src
+
+#+begin_src emacs-lisp
+(use-package! lsp-tailwindcss)
 #+end_src
 * Resources
 ** Examples Configs
