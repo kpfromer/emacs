@@ -515,6 +515,88 @@ https://github.com/merrickluo/lsp-tailwindcss
 #+begin_src emacs-lisp
 (use-package! lsp-tailwindcss)
 #+end_src
+** Latex Org Mode
+This enables xelatex for org mode notes. One just needs to run =SPC-m-e= and choose to export latex pdf.
+
+#+begin_src emacs-lisp
+(setq org-latex-to-pdf-process
+      '("xelatex -interaction nonstopmode %f"
+        "xelatex -interaction nonstopmode %f"))
+#+end_src
+*** Document Types
+**** Assignment
+#+begin_src emacs-lisp
+;; (after! org
+;;    (add-to-list 'org-latex-classes
+;;                 '("article"
+;;                   "\\documentclass{article}"
+;;                   ("\\section{%s}" . "\\section*{%s}")
+;;                   ("\\subsection{%s}" . "\\subsection*{%s}")
+;;                   ("\\subsubsection{%s}" . "\\subsubsection*{%s}")
+;;                   ("\\paragraph{%s}" . "\\paragraph*{%s}")
+;;                   ("\\subparagraph{%s}" . "\\subparagraph*{%s}"))))
+
+(with-eval-after-load 'ox-latex
+  (add-to-list 'org-latex-classes
+               '("article"
+                 "\\documentclass{article}"
+                 ("\\section{%s}" . "\\section*{%s}")
+                 ("\\subsection{%s}" . "\\subsection*{%s}")
+                 ("\\subsubsection{%s}" . "\\subsubsection*{%s}")
+                 ("\\paragraph{%s}" . "\\paragraph*{%s}")
+                 ("\\subparagraph{%s}" . "\\subparagraph*{%s}"))))
+;; ("\\chapter{%s}" . "\\chapter*{%s}")
+;; ("\\section{%s}" . "\\section*{%s}")
+;; ("\\subsection{%s}" . "\\subsection*{%s}")
+;; ("\\subsubsection{%s}" . "\\subsubsection*{%s}"))))
+
+
+(with-eval-after-load 'ox-latex
+  (add-to-list 'org-latex-classes
+               '("org-article"
+                 "\\documentclass{org-article}
+         [NO-DEFAULT-PACKAGES]
+         [PACKAGES]
+         [EXTRA]"
+                 ("\\section{%s}" . "\\section*{%s}")
+                 ("\\subsection{%s}" . "\\subsection*{%s}")
+                 ("\\subsubsection{%s}" . "\\subsubsection*{%s}")
+                 ("\\paragraph{%s}" . "\\paragraph*{%s}")
+                 ("\\subparagraph{%s}" . "\\subparagraph*{%s}"))))
+
+;; (add-to-list 'org-export-latex-classes
+;;              '("test"
+;;                "\\documentclass[11pt,a4paper]{article}
+;; \\usepackage{fontspec}
+;; \\usepackage{graphicx}
+;; \\usepackage{geometry}
+;; \\geometry{a4paper, textwidth=6.5in, textheight=10in,
+;;             marginparsep=7pt, marginparwidth=.6in}
+;; \\pagestyle{empty}
+;; \\title{Hello}
+;;       [NO-DEFAULT-PACKAGES]
+;;       [NO-PACKAGES]"))
+
+
+
+;; (add-to-list 'org-export-latex-classes
+
+;;              '("letter"
+;;                "\\documentclass[11pt]{letter}\n
+;;       \\usepackage[utf8]{inputenc}\n
+;;       \\usepackage[T1]{fontenc}\n
+;;       \\usepackage{color}"
+
+;;                ("\\section{%s}" . "\\section*{%s}")
+;;                ("\\subsection{%s}" . "\\subsection*{%s}")
+;;                ("\\subsubsection{%s}" . "\\subsubsection*{%s}")
+;;                ("\\paragraph{%s}" . "\\paragraph*{%s}")
+;;                ("\\subparagraph{%s}" . "\\subparagraph*{%s}")))
+#+end_src
+
+*** Resources
+- [[http://emacs-fu.blogspot.com/2011/04/nice-looking-pdfs-with-org-mode-and.html]]
+- [[https://github.com/freizl/freizl.github.com-old/blob/f88fc9ed475b61a86d634ff002532878cf80340c/build/posts/2012-04-06-export-orgmode-file-in-Chinese.md]]
 * Resources
 ** Examples Configs
 Here is a collection of example configurations I used to create my own config.
