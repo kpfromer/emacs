@@ -1,0 +1,63 @@
+# -*- mode: snippet -*-
+# name: assignment
+# key: assignment
+# --
+\documentclass[12pt,letterpaper]{article}
+\usepackage{fullpage}
+\usepackage[top=2cm, bottom=4.5cm, left=2.5cm, right=2.5cm]{geometry}
+\usepackage{amsmath,amsthm,amsfonts,amssymb,amscd}
+\usepackage{lastpage}
+\usepackage{enumerate}
+\usepackage{fancyhdr}
+\usepackage{mathrsfs}
+\usepackage{xcolor}
+\usepackage{graphicx}
+\usepackage{listings}
+\usepackage{hyperref}
+\usepackage{enumitem}
+\usepackage{array}   % for \newcolumntype macro
+\usepackage{tcolorbox}
+\usepackage{siunitx}
+\usepackage{tikz}
+
+\hypersetup{%
+  colorlinks=true,
+  linkcolor=blue,
+  linkbordercolor={0 0 1}
+}
+
+\def\checkmark{\tikz\fill[scale=0.4](0,.35) -- (.25,0) -- (1,.7) -- (.25,.15) -- cycle;}
+
+\renewcommand{\familydefault}{\sfdefault}
+
+\setlength{\parindent}{0.0in}
+\setlength{\parskip}{0.05in}
+
+% Edit these as appropriate
+\newcommand{\name}{Kyle Pfromer}
+\newcommand{\course}{$2}
+\newcommand{\hwnumber}{$1}
+\newcommand{\studentID}{109516228}
+
+\newcommand{\blackline}{\noindent\rule[0.5ex]{\linewidth}{1pt}}
+
+% Table
+\newcolumntype{C}{>{$}c<{$}} % math-mode version of "c" column type
+% QA
+\newcommand{\qa}[2]{\textbf{#1}\\#2}
+
+\pagestyle{fancyplain}
+\headheight 35pt
+\lhead{\name \\ ID: \studentID}
+\chead{\textbf{\Large HW \hwnumber}}
+\rhead{\course \\ \today}
+\lfoot{}
+\cfoot{}
+\rfoot{\small\thepage}
+\headsep 1.5em
+
+\begin{document}
+
+$0
+
+\end{document}

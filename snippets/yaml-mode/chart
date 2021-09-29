@@ -1,0 +1,14 @@
+# -*- mode: snippet -*-
+# name: chart
+# key: chart
+# --
+---
+apiVersion: source.toolkit.fluxcd.io/v1beta1
+kind: HelmRepository
+metadata:
+  name: $1-charts
+  namespace: flux-system
+spec:
+  interval: 30m
+  url: $2
+  timeout: 2m
