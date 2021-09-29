@@ -1,0 +1,7 @@
+# -*- mode: snippet -*-
+# name: assignment
+# key: assignment
+# --
+#+setupfile: ~/programming/org/templates/assignment.org
+#+LaTeX_HEADER: \newcommand{\toptitle}{$1}
+#+LaTeX_HEADER: \newcommand{\course}{$2}
