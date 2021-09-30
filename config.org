@@ -484,12 +484,6 @@ This adds the defaults for projectile.
 #+begin_src emacs-lisp
 (setq projectile-project-search-path '("~/programming/"))
 #+end_src
-# ** Formatting
-# #+begin_src emacs-lisp
-# (set-formatter! 'yapf "prettier --write" :modes '(javascript-mode))
-# (set-formatter! 'yapf "prettier --write" :modes '(typescript-mode))
-# #+end_src
-
 ** Circadian (Light/Dark Mode)
 This is an auto light/dark mode switcher based on time of day.
 
@@ -526,15 +520,6 @@ This enables xelatex for org mode notes. One just needs to run =SPC-m-e= and cho
 *** Document Types
 **** Assignment
 #+begin_src emacs-lisp
-;; (after! org
-;;    (add-to-list 'org-latex-classes
-;;                 '("article"
-;;                   "\\documentclass{article}"
-;;                   ("\\section{%s}" . "\\section*{%s}")
-;;                   ("\\subsection{%s}" . "\\subsection*{%s}")
-;;                   ("\\subsubsection{%s}" . "\\subsubsection*{%s}")
-;;                   ("\\paragraph{%s}" . "\\paragraph*{%s}")
-;;                   ("\\subparagraph{%s}" . "\\subparagraph*{%s}"))))
 
 (with-eval-after-load 'ox-latex
   (add-to-list 'org-latex-classes
@@ -545,11 +530,6 @@ This enables xelatex for org mode notes. One just needs to run =SPC-m-e= and cho
                  ("\\subsubsection{%s}" . "\\subsubsection*{%s}")
                  ("\\paragraph{%s}" . "\\paragraph*{%s}")
                  ("\\subparagraph{%s}" . "\\subparagraph*{%s}"))))
-;; ("\\chapter{%s}" . "\\chapter*{%s}")
-;; ("\\section{%s}" . "\\section*{%s}")
-;; ("\\subsection{%s}" . "\\subsection*{%s}")
-;; ("\\subsubsection{%s}" . "\\subsubsection*{%s}"))))
-
 
 (with-eval-after-load 'ox-latex
   (add-to-list 'org-latex-classes
@@ -563,35 +543,6 @@ This enables xelatex for org mode notes. One just needs to run =SPC-m-e= and cho
                  ("\\subsubsection{%s}" . "\\subsubsection*{%s}")
                  ("\\paragraph{%s}" . "\\paragraph*{%s}")
                  ("\\subparagraph{%s}" . "\\subparagraph*{%s}"))))
-
-;; (add-to-list 'org-export-latex-classes
-;;              '("test"
-;;                "\\documentclass[11pt,a4paper]{article}
-;; \\usepackage{fontspec}
-;; \\usepackage{graphicx}
-;; \\usepackage{geometry}
-;; \\geometry{a4paper, textwidth=6.5in, textheight=10in,
-;;             marginparsep=7pt, marginparwidth=.6in}
-;; \\pagestyle{empty}
-;; \\title{Hello}
-;;       [NO-DEFAULT-PACKAGES]
-;;       [NO-PACKAGES]"))
-
-
-
-;; (add-to-list 'org-export-latex-classes
-
-;;              '("letter"
-;;                "\\documentclass[11pt]{letter}\n
-;;       \\usepackage[utf8]{inputenc}\n
-;;       \\usepackage[T1]{fontenc}\n
-;;       \\usepackage{color}"
-
-;;                ("\\section{%s}" . "\\section*{%s}")
-;;                ("\\subsection{%s}" . "\\subsection*{%s}")
-;;                ("\\subsubsection{%s}" . "\\subsubsection*{%s}")
-;;                ("\\paragraph{%s}" . "\\paragraph*{%s}")
-;;                ("\\subparagraph{%s}" . "\\subparagraph*{%s}")))
 #+end_src
 
 *** Resources
