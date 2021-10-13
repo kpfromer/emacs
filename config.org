@@ -353,7 +353,7 @@ Use spaces instead of tabs.
 #+end_src
 ** Evil Tweaks
 TODO:
-[[to][https://github.com/Townk/doom-emacs-private/blob/master/config.org#modal-editing-1]]
+[[https://github.com/Townk/doom-emacs-private/blob/master/config.org#modal-editing-1]]
 * Visual
 ** Theme
 There are two ways to load a theme. Both assume the theme is installed and available. You can either set `doom-theme' or manually load a theme with the `load-theme' function. This is the default:
@@ -375,18 +375,103 @@ Doom exposes five (optional) variables for controlling fonts in Doom. Here are t
 #+end_src
 * Org Mode
 ** Org Directory
-This is where all of my org file will be typiically located.
+This is where all of my org file will be typically located.
 
 #+begin_src emacs-lisp
 (setq org-directory "~/programming/org")
 #+end_src
-** Default Folding
+** Config
+Here we wait for org to load then we can set up our configuration.
+
+#+begin_src emacs-lisp
+(after! org
+#+end_src
+
+Org mode can render latex inline, but by default it uses pngs. pngs look like dogshit and thus I would rather use svgs with transparent backgrounds.
+
+#+begin_src emacs-lisp
+(plist-put! org-format-latex-options
+            :scale 0.85
+            :foreground "Black"
+            :background "Transparent")
+
+(setq org-preview-latex-default-process 'dvisvgm
+      org-startup-with-latex-preview t)
+#+end_src
+
+I also like to display text formatting as close to WYSIWYG as I can have. This means that if I mark a word as italic, instead of showing /word/, I want to display word:
+
+#+begin_src emacs-lisp
+(setq org-hide-emphasis-markers t
+      org-pretty-entities t)
+#+end_src
+
 By default when I open an org mode file all the sections will be folded. This makes it easier to find important information.
 
 See options [[https://orgmode.org/manual/Initial-visibility.html#Initial-visibility][here.]]
 
 #+begin_src emacs-lisp
 (setq org-startup-folded "overview")
+#+end_src
+
+We close out our org mod configuration.
+
+#+begin_src emacs-lisp
+) ; after! org
+#+end_src
+
+Even though our configuration can render math formulas nicely, it’s still awkward to edit them once you write them. To help us with this task, I’ll install a plugin called ~org-fragtog~. This plugin will show the math formula with the LaTeX syntax if the cursor is inside the formula area, and will render the formula when the cursor leaves it.
+
+First we add the plugin on our =packages.el= file:
+
+#+begin_src emacs-lisp :tangle packages.el
+(package! org-fragtog)
+#+end_src
+
+Then, we use ~use-package!~ to defer its loading (we will load it manually later):
+
+#+begin_src emacs-lisp
+(use-package! org-fragtog :defer t)
+#+end_src
+
+Another nice plugin to have is the [[https://github.com/casouri/valign][~valign~]] plugin. It will align your Org tables nicely, even when you have formulas and images on them.
+
+As with the ~org-fragtog~, let's first add it to our =packages.el=:
+
+#+begin_src emacs-lisp :tangle packages.el
+(package! valign)
+#+end_src
+
+Then, we use ~use-package!~ to defer its loading as we did with ~org-fragtog~, but for this plugin, we want to set the ~valign-fancy-bar~ to =t=, to have even nicer renders of tables:
+
+#+begin_src emacs-lisp
+(use-package! valign
+  :defer t
+  :init (setq valign-fancy-bar t))
+#+end_src
+
+#+begin_src emacs-lisp
+(defun my-org-buffer-config-h ()
+  "Configure all aspects of an Org buffer right before we display it to the user."
+  ;; Enable minor modes
+  (when window-system
+    ;; (+zen/toggle)
+    (valign-mode 1)
+    (variable-pitch-mode 1)
+
+    (org-fragtog-mode 1)
+    (org-appear-mode 1))
+  ;; Call org configuration functions
+  ;; (org-display-inline-images)
+  ;; Ignore flycheck errors on source blocks
+  ;; Force a buffer refresh to guarantee all setup is in use
+  (set-window-buffer nil (current-buffer)))
+#+end_src
+
+With this function in place, we can hook it to our Org major mode:
+
+#+begin_src emacs-lisp
+(add-hook 'org-mode-hook #'my-org-buffer-config-h)
 #+end_src
 ** Better Font Faces
 - Here we set the various font sizes for org mode headers.
@@ -445,7 +530,11 @@ Show emphasis markers when the cursor is over it.
     :config
     (setq org-appear-autoemphasis t
           org-appear-autosubmarkers t
-          org-appear-autolinks nil))
+          org-appear-autolinks t))
+;; (after! org (setq org-hide-emphasis-markers t))
+
+;; (use-package! org-appear
+;;     :hook (org-mode . org-appear-mode))
 #+end_src
 ** Roam server
 A web application to show roam notes as a visual graph.
