@@ -637,6 +637,18 @@ This enables xelatex for org mode notes. One just needs to run =SPC-m-e= and cho
 *** Resources
 - [[http://emacs-fu.blogspot.com/2011/04/nice-looking-pdfs-with-org-mode-and.html]]
 - [[https://github.com/freizl/freizl.github.com-old/blob/f88fc9ed475b61a86d634ff002532878cf80340c/build/posts/2012-04-06-export-orgmode-file-in-Chinese.md]]
+** Rust LSP
+#+begin_src emacs-lisp
+(use-package! lsp-rust
+  :config
+  (setq! lsp-rust-analyzer-cargo-watch-enable t
+         lsp-rust-analyzer-cargo-watch-command "clippy"
+         lsp-rust-analyzer-proc-macro-enable t
+         lsp-rust-analyzer-cargo-load-out-dirs-from-check t
+         lsp-rust-analyzer-inlay-hints-mode t
+         lsp-rust-analyzer-display-chaining-hints t
+         lsp-rust-analyzer-display-parameter-hints t))
+#+end_src
 * Resources
 ** Examples Configs
 Here is a collection of example configurations I used to create my own config.
