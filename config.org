@@ -187,7 +187,7 @@ Here is the code that is written to `init.el`. This defines what modules I want 
        ;;unicode           ; extended unicode support for various languages
        vc-gutter         ; vcs diff in the fringe
        vi-tilde-fringe   ; fringe tildes to mark beyond EOB
-       ;;window-select     ; visually switch windows
+       window-select     ; visually switch windows
        workspaces        ; tab emulation, persistence & separate workspaces
        zen               ; distraction-free coding or writing
 
@@ -647,7 +647,34 @@ This enables xelatex for org mode notes. One just needs to run =SPC-m-e= and cho
          lsp-rust-analyzer-cargo-load-out-dirs-from-check t
          lsp-rust-analyzer-inlay-hints-mode t
          lsp-rust-analyzer-display-chaining-hints t
-         lsp-rust-analyzer-display-parameter-hints t))
+         lsp-rust-analyzer-display-parameter-hints t)
+  (lsp-rust-analyzer-inlay-hints-mode))
+#+end_src
+** ace-window
+This makes the text for ace window much *larger* as seen [[https://github.com/hlissner/doom-emacs/blob/develop/modules/ui/window-select/README.org][here]].
+
+#+begin_src emacs-lisp
+(custom-set-faces!
+  '(aw-leading-char-face
+    :foreground "white" :background "red"
+    :weight bold :height 2.5 :box (:line-width 10 :color "red")))
+#+end_src
+
+This maps the "SPC o w" key to ace window. Read more about mapping keys [[https://github.com/hlissner/doom-emacs/issues/1062][here]].
+#+begin_src emacs-lisp
+(map!
+ :leader
+ :prefix "w"
+ :desc "quickly change windows"
+ "o" #'ace-window)
+;; (use-package ace-window
+;;   :bind (("SPC w o" . ace-window))
+;;   :custom
+;;   (aw-scope 'frame)
+;;   (aw-keys '(?a ?s ?d ?f ?g ?h ?j ?k ?l))
+;;   (aw-minibuffer-flag t)
+;;   :config
+;;   (ace-window-display-mode 1))
 #+end_src
 * Resources
 ** Examples Configs
