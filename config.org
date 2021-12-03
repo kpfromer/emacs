@@ -676,6 +676,13 @@ This maps the "SPC o w" key to ace window. Read more about mapping keys [[https:
 ;;   :config
 ;;   (ace-window-display-mode 1))
 #+end_src
+* VTerm
+#+begin_src emacs-lisp
+(add-hook 'vterm-mode-hook
+          (lambda ()
+            (set (make-local-variable 'buffer-face-mode-face) '(:family "CozetteVector" :height 110))
+                 (buffer-face-mode t)))
+#+end_src
 * Resources
 ** Examples Configs
 Here is a collection of example configurations I used to create my own config.
