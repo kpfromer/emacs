@@ -603,3 +603,12 @@ This maps the "SPC o w" key to ace window. Read more about mapping keys [[https:
 ;;  :desc "quickly change windows"
 ;;  "o" #'ace-window)
 #+end_src
+
+* For Work (Compa)
+** Use =isort= on python file save
+#+begin_src emacs-lisp
+(after! python
+  (add-hook 'python-mode-hook
+            (lambda ()
+              (add-hook 'before-save-hook 'py-isort-buffer))))
+#+end_src
