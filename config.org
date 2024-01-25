@@ -12,8 +12,10 @@ For the =c= and =c++= lsp to work you need to follow [[https://github.com/hlissn
 
 - [ ] Get https://github.com/charignon/github-review setup
 - [ ] Auto saving buffers and =return= to default to adding new item to list in org mode [[https://joeprevite.com/doom-emacs]]
-* Notes
-Here are the [[https://github.com/doomemacs/doomemacs/blob/develop/modules/config/default/+evil-bindings.el][default doom emacs keybindings]]
+* Learning Resources Notes
+- Here are the [[https://github.com/doomemacs/doomemacs/blob/develop/modules/config/default/+evil-bindings.el][default doom emacs keybindings]]
+- Here are a great recap of the keybindings (especially the vim movement ones): https://github.com/niyumard/Doom-Emacs-Cheat-Sheet
+
 * General Settings
 ** Config Headers
 #+html: <details><summary>init.el</summary>
@@ -629,9 +631,15 @@ This maps the "SPC o w" key to ace window. Read more about mapping keys [[https:
 
 * For Work (Compa)
 ** Use =isort= on python file save
+**Not sure if this is working properly**
 #+begin_src emacs-lisp
 (after! python
   (add-hook 'python-mode-hook
             (lambda ()
               (add-hook 'before-save-hook 'py-isort-buffer))))
+#+end_src
+
+TODO: make for only python mode
+#+begin_src emacs-lisp
+;; (add-hook 'before-save-hook 'py-isort-before-save)
 #+end_src
