@@ -485,6 +485,17 @@ This will make the Scratch pad default to org mode.
 #+begin_src emacs-lisp
 (setq initial-major-mode 'org-mode)
 #+end_src
+** Sticky Header
+It's nice to know what section of an org mode you are editing when you have a lot of text. This package handles showing the header no matter where you .
+
+#+begin_src emacs-lisp :tangle packages.el
+(package! org-sticky-header)
+#+end_src
+
+#+begin_src emacs-lisp
+(use-package! org-sticky-header
+  :hook (org-mode . org-sticky-header-mode))
+#+end_src
 * Packages
 ** Projectile
 This adds the defaults for projectile.
@@ -568,6 +579,19 @@ This enables xelatex for org mode notes. One just needs to run =SPC-m-e= and cho
          lsp-rust-analyzer-display-parameter-hints t)
   (lsp-inlay-hints-mode))
 #+end_src
+** Sticky Headers for Programming
+It's nice to know the function you are editing and what the definition for the function is. This package handles showing that defintion.
+
+#+begin_src emacs-lisp :tangle packages.el
+(package! topsy)
+#+end_src
+
+#+begin_src emacs-lisp
+(use-package! topsy
+  :hook
+  (prog-mode . topsy-mode)
+  (magit-section-mode . topsy-mode))
+#+end_src
 ** Examples Configs
 Here is a collection of example configurations I used to create my own config.
 
@@ -576,7 +600,6 @@ Doom Emacs:
 - [[https://tecosaur.github.io/emacs-config/config.html]]
 Regular Emacs:
 - [[https://github.com/angrybacon/dotemacs/blob/master/dotemacs.org]]
-
 * From the OLD config (2021)
 ** VTerm
 #+begin_src emacs-lisp
