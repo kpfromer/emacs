@@ -628,18 +628,18 @@ This maps the "SPC o w" key to ace window. Read more about mapping keys [[https:
 ;;  :desc "quickly change windows"
 ;;  "o" #'ace-window)
 #+end_src
-
 * For Work (Compa)
 ** Use =isort= on python file save
-**Not sure if this is working properly**
 #+begin_src emacs-lisp
 (after! python
   (add-hook 'python-mode-hook
             (lambda ()
-              (add-hook 'before-save-hook 'py-isort-buffer))))
+              (add-hook 'before-save-hook 'py-isort-before-save))))
 #+end_src
-
-TODO: make for only python mode
+** Pyright organize auto import
 #+begin_src emacs-lisp
-;; (add-hook 'before-save-hook 'py-isort-before-save)
+(defun kpfromer/lsp-pyright-buffer-file-organize-imports ()
+  (interactive)
+  (lsp-send-execute-command "pyright.organizeimports"
+                            (vector (concat "file://" (buffer-file-name)))))
 #+end_src
