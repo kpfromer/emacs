@@ -594,6 +594,33 @@ It's nice to know the function you are editing and what the definition for the f
   (prog-mode . topsy-mode)
   (magit-section-mode . topsy-mode))
 #+end_src
+** Getting TSX working properly
+- [ ] FIXME THIS IS NOT WORKING
+
+See this page about using tsx https://merrick.luois.me/posts/typescript-in-emacs-29
+
+> Although the built-in support is available, there are still some hassles to get it working properly. You need to install the grammar files for the major modes you want to use and enable the tree-sitter-based major modes in your configuration.
+
+> treesit-auto is a package to minimizes the hassle, but since I only want to use the TypeScript/TSX major modes, I prefer to do it manually.
+
+#+begin_src emacs-lisp
+(after! treesit
+  (setq treesit-language-source-alist
+        '((typescript "https://github.com/tree-sitter/tree-sitter-typescript" "master" "typescript/src" nil nil)
+          (tsx "https://github.com/tree-sitter/tree-sitter-typescript" "master" "tsx/src" nil nil))))
+#+end_src
+
+> Now, you can activate the new major modes in your config, and you are good to go, you can skip the lsp part if you don’t use lsp of course.
+
+#+begin_src emacs-lisp
+(use-package typescript-ts-mode
+  :mode (("\\.ts\\'" . typescript-ts-mode)
+         ("\\.tsx\\'" . tsx-ts-mode))
+  :config
+  (add-hook! '(typescript-ts-mode-hook tsx-ts-mode-hook) #'lsp!))
+#+end_src
+
+- [ ] TODO electric pair (closing tsx tags)
 ** Examples Configs
 Here is a collection of example configurations I used to create my own config.
 
