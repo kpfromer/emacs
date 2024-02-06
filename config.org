@@ -339,7 +339,7 @@ For the =c= and =c++= lsp to work you need to follow [[https://github.com/hlissn
        :app
        ;;calendar
        ;;emms
-       ;;everywhere        ; *leave* Emacs!? You must be joking
+       everywhere        ; *leave* Emacs!? You must be joking
        ;;irc               ; how neckbeards socialize
        ;;(rss +org)        ; emacs as an RSS reader
        ;;twitter           ; twitter client https://twitter.com/vnought
@@ -497,6 +497,11 @@ It's nice to know what section of an org mode you are editing when you have a lo
 #+begin_src emacs-lisp
 (use-package! org-sticky-header
   :hook (org-mode . org-sticky-header-mode))
+#+end_src
+** Emacs Everywhere convert to markdown
+#+begin_src emacs-lisp
+(remove-hook 'emacs-everywhere-init-hooks #'emacs-everywhere-major-mode-org-or-markdown) ; or #'org-mode if that's what's present
+(add-hook 'emacs-everywhere-init-hooks #'gfm-mode)
 #+end_src
 * Packages
 ** Projectile
