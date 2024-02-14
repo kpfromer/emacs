@@ -634,6 +634,13 @@ Doom Emacs:
 - [[https://tecosaur.github.io/emacs-config/config.html]]
 Regular Emacs:
 - [[https://github.com/angrybacon/dotemacs/blob/master/dotemacs.org]]
+** Convert Org mode to Markdown
+#+begin_src emacs-lisp
+(after! org
+  ;; Do not wrap lines when converting to markdown.
+  (setq org-pandoc-options-for-gfm '((wrap . "none")))
+  (setq org-pandoc-options-for-markdown '((wrap . "none"))))
+#+end_src
 * From the OLD config (2021)
 ** VTerm
 #+begin_src emacs-lisp
