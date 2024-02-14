@@ -1,0 +1,25 @@
+# -*- mode: snippet -*-
+# name: django-testcase
+# uuid: django-test-case
+# key: django-testcase
+# condition: t
+# --
+from django.test import TestCase
+from tiger_lily.core.privacy2.context import privacy_context
+from tiger_lily.viewer_context.all_powerful import (
+    AllPowerfulViewerContext,
+    AllPowerfulViewerContextJustification,
+)
+
+class ${1:name}Test(TestCase):
+    def setUp(self) -> None:
+        self.vc = AllPowerfulViewerContext(
+            tenant=None,
+            justification=AllPowerfulViewerContextJustification.TEST,
+        )
+        with privacy_context(self.vc):
+             pass
+    def test_THING(self) -> None:
+        with privacy_context(self.vc):
+             $0
+             pass
