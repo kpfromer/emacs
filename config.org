@@ -300,7 +300,7 @@ For the =c= and =c++= lsp to work you need to follow [[https://github.com/hlissn
        javascript        ; all(hope(abandon(ye(who(enter(here))))))
        ;;julia             ; a better, faster MATLAB
        ;;kotlin            ; a better, slicker Java(Script)
-       ;;latex             ; writing papers in Emacs has never been so fun
+       latex             ; writing papers in Emacs has never been so fun
        ;;lean              ; for folks with too much to prove
        ;;ledger            ; be audit you can be
        ;;lua               ; one-based indices? one-based indices
@@ -640,6 +640,42 @@ Regular Emacs:
   ;; Do not wrap lines when converting to markdown.
   (setq org-pandoc-options-for-gfm '((wrap . "none")))
   (setq org-pandoc-options-for-markdown '((wrap . "none"))))
+* Sage Math
+#+begin_src emacs-lisp :tangle packages.el
+(package! sage-shell-mode)
+(package! ob-sagemath)
+#+end_src
+
+#+begin_src emacs-lisp
+(use-package sage-shell-mode
+  ;; (add-to-list 'exec-path "/path/to/sage/bin") ; Replace "/path/to/sage/bin" with the actual path to your SageMath binary directory
+  )
+
+(use-package ob-sagemath
+  :config
+  ;; Ob-sagemath supports only evaluating with a session.
+  (setq org-babel-default-header-args:sage '((:session . t)
+                                             (:results . "output")))
+  ;; C-c c for asynchronous evaluating (only for SageMath code blocks).
+  ;; (with-eval-after-load "org"
+  ;;   (define-key org-mode-map (kbd "C-c c") 'ob-sagemath-execute-async))
+  ;; Do not confirm before evaluation
+  (setq org-confirm-babel-evaluate nil)
+  ;; Do not evaluate code blocks when exporting.
+  (setq org-export-babel-evaluate nil)
+  ;; Show images when opening a file.
+  (setq org-startup-with-inline-images t)
+  ;; Show images after evaluating code blocks.
+  (add-hook 'org-babel-after-execute-hook 'org-display-inline-images))
+#+end_src
+* Latex Auto Preview
+#+begin_src emacs-lisp :tangle packages.el
+(package! org-fragtog)
+#+end_src
+
+#+begin_src emacs-lisp
+(after! org
+  (add-hook 'org-mode-hook 'org-fragtog-mode))
 #+end_src
 * From the OLD config (2021)
 ** VTerm
