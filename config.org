@@ -221,7 +221,7 @@ For the =c= and =c++= lsp to work you need to follow [[https://github.com/hlissn
        ;;word-wrap         ; soft wrapping with language-aware indent
 
        :emacs
-       dired             ; making dired pretty [functional]
+       (dired +ranger)             ; making dired pretty [functional]
        electric          ; smarter, keyword-based electric-indent
        ;;ibuffer         ; interactive buffer management
        undo              ; persistent, smarter undo for your inevitable mistakes
@@ -717,4 +717,101 @@ This maps the "SPC w w" key to ace window. Read more about mapping keys [[https:
   (interactive)
   (lsp-send-execute-command "pyright.organizeimports"
                             (vector (concat "file://" (buffer-file-name)))))
+#+end_src
+* Dired Ranger Video Thumbnail Preview
+#+begin_src emacs-lisp
+;; Define a function to generate video thumbnails
+;; OLD with output causing split buffers
+;; (defun generate-video-thumbnail (videofile thumbnailfile)
+;;   "Generate thumbnail for VIDEO-FILE using ffmpegthumbnailer and save it as THUMBNAIL-FILE."
+;;   (shell-command (format "ffmpegthumbnailer -i %S -o %S -s 0" videofile thumbnailfile)))
+
+(defun generate-video-thumbnail (videofile thumbnailfile)
+  "Generate thumbnail for VIDEO-FILE using ffmpegthumbnailer and save it as THUMBNAIL-FILE."
+  (call-process-shell-command (format "ffmpegthumbnailer -i %S -o %S -s 0" videofile thumbnailfile)) nil "*Shell Command Output*" t)
+
+
+;; Define a command to generate thumbnails for video files in dired
+;; (defun +image-dired-generate-video-thumbnails ()
+;;   "Generate thumbnails for video files in the current dired buffer."
+;;   (interactive)
+;;   (dired-map-over-marks
+;;     (generate-video-thumbnail (dired-get-file-for-visit) (concat (dired-get-file-for-visit) ".png"))
+;;    nil))
+
+;; Add a key binding for generating video thumbnails in image-dired mode
+;; (after! image-dired
+;;   (map! :map image-dired-thumbnail-mode-map
+;;         :localleader
+;;         :desc "Generate Video Thumbnails"
+;;         "v" #'+image-dired-generate-video-thumbnails))
+#+end_src
+
+#+begin_src emacs-lisp
+(defun +image-dired-generate-video-thumbnails ()
+  "Generate thumbnails for video files in the current dired buffer, open them in new buffers, and display them visually."
+  (interactive)
+  (let ((temp-dir (make-temp-file "thumbnails-" t)))
+    (dired-map-over-marks
+     (let* ((video-file (dired-get-file-for-visit))
+            (thumbnail-file (concat temp-dir (file-name-nondirectory (file-name-sans-extension video-file)) ".png")))
+       (generate-video-thumbnail video-file thumbnail-file)
+       (let ((buf (find-file-noselect thumbnail-file)))
+         (with-current-buffer buf
+           (image-mode)
+           (pop-to-buffer buf)
+           (message "Thumbnail generated for %s at %s" video-file thumbnail-file))))
+     nil)))
+#+end_src
+
+#+begin_src emacs-lisp
+;; Old version
+;; (defun ranger-preview-video-thumbnail (entry-name)
+;;   "Preview thumbnails for video files in Dired Ranger."
+;;   (let* ((video-file entry-name)
+;;          ;; Cache this temp dir for faster perf
+;;          (temp-dir (make-temp-file "thumbnails-" t))
+;;             (thumbnail-file (concat temp-dir (file-name-nondirectory (file-name-sans-extension video-file)) ".png")))
+;;          ;; (thumbnail-file (concat (file-name-sans-extension video-file) ".png")))
+;;     (generate-video-thumbnail video-file thumbnail-file)
+;;     (ranger-preview-buffer thumbnail-file)))
+
+(defvar ranger-video-thumbnail-map (make-hash-table :test 'equal :weakness 'key)
+  "A hash table to store mappings from video file names to their corresponding thumbnail files.")
+
+(defun ranger-preview-video-thumbnail (entry-name)
+  "Preview thumbnails for video files in Dired Ranger."
+  (let* ((video-file entry-name)
+         (thumbnail-file (or (gethash video-file ranger-video-thumbnail-map)
+                             (let ((temp-dir (make-temp-file "thumbnails-" t)))
+                               (puthash video-file (concat temp-dir (file-name-nondirectory (file-name-sans-extension video-file)) ".png") ranger-video-thumbnail-map)
+                               (gethash video-file ranger-video-thumbnail-map)))))
+    (unless thumbnail-file
+      (error "Thumbnail file path could not be determined"))
+    (unless (file-exists-p thumbnail-file)
+      (generate-video-thumbnail video-file thumbnail-file))
+    (ranger-preview-buffer thumbnail-file)))
+
+;; (defun ranger-preview-buffer (entry-name)
+;;   "Create the preview buffer of `ENTRY-NAME'.
+;;    If `ranger-show-literal' is set, show literally instead of actual buffer."
+;;   (if (and (not (file-directory-p entry-name))
+;;            (video-file-p entry-name))
+;;       (ranger-preview-video-thumbnail entry-name)
+;;     ;; Original preview logic for non-video files goes here...
+;;     ))
+
+(defun video-file-p (filename)
+  "Check if FILENAME is a video file."
+  (member (file-name-extension filename) '("mp4" "mkv" "avi" "mov" "mpg" "webm")))
+
+
+;; TODO: still need to include fixes to ignored files and max file size for ranger.el **here**
+;; Hook the new function into the existing preview mechanism of Dired Ranger
+(advice-add 'ranger-preview-buffer :around
+            (lambda (oldfun &rest args)
+              (let ((entry-name (car args)))
+                (if (video-file-p entry-name)
+                    (ranger-preview-video-thumbnail entry-name)
+                  (apply oldfun args)))))
 #+end_src
