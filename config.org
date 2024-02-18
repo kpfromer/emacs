@@ -677,6 +677,17 @@ Regular Emacs:
 (after! org
   (add-hook 'org-mode-hook 'org-fragtog-mode))
 #+end_src
+** Beacon
+Beacon highlights the current cursor line after major movement changes. This is super useful for HDPi screens!
+
+#+begin_src emacs-lisp :tangle packages.el
+(package! beacon)
+#+end_src
+
+#+begin_src emacs-lisp
+(use-package! beacon)
+(after! beacon (beacon-mode 1))
+#+end_src
 * From the OLD config (2021)
 ** VTerm
 #+begin_src emacs-lisp
