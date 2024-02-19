@@ -776,17 +776,6 @@ This maps the "SPC w w" key to ace window. Read more about mapping keys [[https:
 #+end_src
 
 #+begin_src emacs-lisp
-;; Old version
-;; (defun ranger-preview-video-thumbnail (entry-name)
-;;   "Preview thumbnails for video files in Dired Ranger."
-;;   (let* ((video-file entry-name)
-;;          ;; Cache this temp dir for faster perf
-;;          (temp-dir (make-temp-file "thumbnails-" t))
-;;             (thumbnail-file (concat temp-dir (file-name-nondirectory (file-name-sans-extension video-file)) ".png")))
-;;          ;; (thumbnail-file (concat (file-name-sans-extension video-file) ".png")))
-;;     (generate-video-thumbnail video-file thumbnail-file)
-;;     (ranger-preview-buffer thumbnail-file)))
-
 (defvar ranger-video-thumbnail-map (make-hash-table :test 'equal :weakness 'key)
   "A hash table to store mappings from video file names to their corresponding thumbnail files.")
 
@@ -803,15 +792,6 @@ This maps the "SPC w w" key to ace window. Read more about mapping keys [[https:
       (generate-video-thumbnail video-file thumbnail-file))
     (ranger-preview-buffer thumbnail-file)))
 
-;; (defun ranger-preview-buffer (entry-name)
-;;   "Create the preview buffer of `ENTRY-NAME'.
-;;    If `ranger-show-literal' is set, show literally instead of actual buffer."
-;;   (if (and (not (file-directory-p entry-name))
-;;            (video-file-p entry-name))
-;;       (ranger-preview-video-thumbnail entry-name)
-;;     ;; Original preview logic for non-video files goes here...
-;;     ))
-
 (defun video-file-p (filename)
   "Check if FILENAME is a video file."
   (member (file-name-extension filename) '("mp4" "mkv" "avi" "mov" "mpg" "webm")))
@@ -825,4 +805,14 @@ This maps the "SPC w w" key to ace window. Read more about mapping keys [[https:
                 (if (video-file-p entry-name)
                     (ranger-preview-video-thumbnail entry-name)
                   (apply oldfun args)))))
+
+;; This advice function ensures that videos are always "previewed" (even though we are showing images)
+(defun my-ranger-setup-preview-advice (orig-func &rest args)
+  "Advice function to modify ranger-setup-preview."
+  ;; Call the original function but modify the condition
+  (let ((ranger-max-preview-size (* 1024 1024))  ; Set to 0 to always evaluate to nil
+        (ranger-excluded-extensions '())) ; Set to an empty list to always evaluate to nil
+    (apply orig-func args)))
+
+(advice-add 'ranger-setup-preview :around #'my-ranger-setup-preview-advice)
 #+end_src
